@@ -69,16 +69,28 @@ simpVar d v = case find d v of
     Just a -> Val a
 
 simpAdd :: EDict -> Expr -> Expr -> Expr
+simpAdd d e1 (Val 0) = e1
+simpAdd d (Val 0) e1 = e1
+simpAdd d (Val a) (Val b) = Val (a + b)
 simpAdd d e1 e2 = Add e1 e2
 
 simpSub :: EDict -> Expr -> Expr -> Expr
+simpSub d e1 (Val 0) = e1
+simpSub d (Val a) (Val b) = Val (a - b)
 simpSub d e1 e2 = Sub e1 e2
 
 simpMul :: EDict -> Expr -> Expr -> Expr
+simpMul d e1 (Val 1) = e1
+simpMul d (Val 1) e1 = e1
+simpMul d (Val a) (Val b) = Val (a * b)
 simpMul d e1 e2 = Mul e1 e2
 
 simpDvd :: EDict -> Expr -> Expr -> Expr
+simpDvd d e1 (Val 1) = e1
+simpDvd d e1 (Val 0) = Dvd e1 (Val 0)
+simpDvd d (Val a) (Val b) = Val (a / b)
 simpDvd d e1 e2 = Dvd e1 e2
 
 simpDef :: EDict -> Id -> Expr -> Expr -> Expr
+simpDef d v (Val a) e1 = simp (define d v a) e1
 simpDef d v e1 e2 = Def v e1 e2
