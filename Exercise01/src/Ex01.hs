@@ -1,4 +1,5 @@
-{- butrfeld Andrew Butterfield -}
+{- duffyow@tcd.ie Owen Duffy -}
+-- 16325830
 module Ex01 where
 import Data.List ((\\))
 
