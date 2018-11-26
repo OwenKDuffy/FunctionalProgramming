@@ -225,7 +225,7 @@ evalDefTests
         (eval dx42 (Def n d1 vx) @?= Just 42.0)
     , testCase "Def n Val n (empty dict) {1 mark}"
         (eval emptyD (Def n d1 (Var n)) @?= Just 1.0)
-    , testCase "a=2, b=42 in a*b {1 mark}"
+    , testCase "a=2 b=42 in a*b {1 mark}"
         (eval emptyD (Def "a" d2 (Def "b" d42 (Mul va vb))) @?= Just 84.0)
     ]
 
@@ -279,51 +279,51 @@ simpVarTests
 simpAddTests
  = testGroup "\nAdd tests (8 marks)\n"
     [ testCase "e+0 = e {1 mark}" (simp emptyD (Add eBig1 d0) @?= eBig1 )
-    , testCase "e+z = e, when z=0 {1 mark}" (simp dz0 (Add eBig1 vz) @?= eBig1 )
+    , testCase "e+z = e when z=0 {1 mark}" (simp dz0 (Add eBig1 vz) @?= eBig1 )
     , testCase "0+e = e {1 mark}" (simp emptyD (Add d0 eBig1) @?= eBig1 )
-    , testCase "z+e = e, when z=0 {1 mark}" (simp dz0 (Add vz eBig1) @?= eBig1 )
+    , testCase "z+e = e when z=0 {1 mark}" (simp dz0 (Add vz eBig1) @?= eBig1 )
     , testCase "1+1 = 2 {1 mark}" (simp du1w1 (Add d1 d1) @?= d2 )
-    , testCase "u+w = 2, when u,w=1 {1 mark}" (simp du1w1 (Add vu vw) @?= d2 )
-    , testCase "1+w = 2, when w=1 {1 mark}" (simp du1w1 (Add d1 vw) @?= d2 )
-    , testCase "u+1 = 2, when u=1 {1 mark}" (simp du1w1 (Add vu d1) @?= d2 )
+    , testCase "u+w = 2 when u w=1 {1 mark}" (simp du1w1 (Add vu vw) @?= d2 )
+    , testCase "1+w = 2 when w=1 {1 mark}" (simp du1w1 (Add d1 vw) @?= d2 )
+    , testCase "u+1 = 2 when u=1 {1 mark}" (simp du1w1 (Add vu d1) @?= d2 )
     ]
 
 simpSubTests
  = testGroup "\nSub tests (6 marks)\n"
     [ testCase "e-0 = e {1 mark}" (simp emptyD (Sub eBig1 d0) @?= eBig1 )
-    , testCase "e-z = e, when z=0 {1 mark}" (simp dz0 (Sub eBig1 vz) @?= eBig1 )
+    , testCase "e-z = e when z=0 {1 mark}" (simp dz0 (Sub eBig1 vz) @?= eBig1 )
     , testCase "2-1 = 1  {1 mark}" (simp du1w1 (Sub d2 d1) @?= d1 )
-    , testCase "u-w = 0, when u,w=1 {1 mark}" (simp du1w1 (Sub vu vw) @?= d0 )
-    , testCase "u-1 = 0, when u=1 {1 mark}" (simp du1w1 (Sub vu d1) @?= d0 )
-    , testCase "1-w = 0, when w=1 {1 mark}" (simp du1w1 (Sub d1 vw) @?= d0 )
+    , testCase "u-w = 0 when u w=1 {1 mark}" (simp du1w1 (Sub vu vw) @?= d0 )
+    , testCase "u-1 = 0 when u=1 {1 mark}" (simp du1w1 (Sub vu d1) @?= d0 )
+    , testCase "1-w = 0 when w=1 {1 mark}" (simp du1w1 (Sub d1 vw) @?= d0 )
     ]
 
 simpMulTests
  = testGroup "\nMul tests (8 marks)\n"
     [ testCase "e*1 = e {1 mark}" (simp emptyD (Mul eBig1 d1) @?= eBig1 )
-    , testCase "e*u = e, when u=1 {1 mark}" (simp du1 (Mul eBig1 vu) @?= eBig1 )
+    , testCase "e*u = e when u=1 {1 mark}" (simp du1 (Mul eBig1 vu) @?= eBig1 )
     , testCase "1*e = e {1 mark}" (simp emptyD (Mul d1 eBig1) @?= eBig1 )
-    , testCase "u*e = e, when u=1 {1 mark}" (simp du1 (Mul vu eBig1) @?= eBig1 )
+    , testCase "u*e = e when u=1 {1 mark}" (simp du1 (Mul vu eBig1) @?= eBig1 )
     , testCase "2*2 = 4 {1 mark}" (simp du3w3 (Mul d2 d2) @?= Val 4.0 )
-    , testCase "u*w = 9, u,w=3 {1 mark}" (simp du3w3 (Mul vu vw) @?= Val 9.0 )
-    , testCase "2*w = 6, w=3 {1 mark}" (simp du3w3 (Mul d2 vw) @?= Val 6.0 )
-    , testCase "u*5 = 15, u=3 {1 mark}" (simp du3w3 (Mul vu d5) @?= Val 15.0 )
+    , testCase "u*w = 9 u,w=3 {1 mark}" (simp du3w3 (Mul vu vw) @?= Val 9.0 )
+    , testCase "2*w = 6 w=3 {1 mark}" (simp du3w3 (Mul d2 vw) @?= Val 6.0 )
+    , testCase "u*5 = 15 u=3 {1 mark}" (simp du3w3 (Mul vu d5) @?= Val 15.0 )
     ]
 
 simpDvdTests
  = testGroup "\nDvd tests (8 marks)\n"
     [ testCase "e/1 = e {1 mark}" (simp emptyD (Dvd eBig1 d1) @?= eBig1 )
-    , testCase "e/u = e, when u=1 {1 mark}" (simp du1 (Dvd eBig1 vu) @?= eBig1 )
+    , testCase "e/u = e when u=1 {1 mark}" (simp du1 (Dvd eBig1 vu) @?= eBig1 )
     , testCase "42/2 = 21 {1 mark}" (simp du3w3 (Dvd d42 d2) @?= Val 21.0 )
-    , testCase "x/y = 6, when x=42,y=7 {1 mark}"
+    , testCase "x/y = 6 when x=42,y=7 {1 mark}"
         (simp dx42y7 (Dvd vx vy) @?= Val 6.0 )
-    , testCase "x/7 = 6, when x=42 {1 mark}"
+    , testCase "x/7 = 6 when x=42 {1 mark}"
         (simp dx42y7 (Dvd vx (Val 7.0)) @?= Val 6.0 )
-    , testCase "42/y = 6, when y=7 {1 mark}"
+    , testCase "42/y = 6 when y=7 {1 mark}"
         (simp dx42y7 (Dvd d42 vy) @?= Val 6.0 )
     , testCase "e/0 stays as e/0 {1 mark}"
         (simp dx42y7 (Dvd d42 d0) @?= Dvd d42 d0 )
-    , testCase "e/z stays as e/z, when z=0 {1 mark}"
+    , testCase "e/z stays as e/z when z=0 {1 mark}"
         (simp dz0 (Dvd d42 vz) @?= Dvd d42 d0 )
     ]
 
@@ -337,12 +337,12 @@ simpDefTests
  = testGroup "\nDef tests (25 marks)\n"
     [ testCase "let x=0 in x = 0 {4 marks}" (simp emptyD (Def "x" d0 vx) @?= d0 )
     , testCase "let x=0 in y = y {4 marks}" (simp emptyD (Def "x" d0 vy) @?= vy )
-    , testCase "let a=2, b=3 in a*b = 6 {4 marks}"
+    , testCase "let a=2 b=3 in a*b = 6 {4 marks}"
          (simp [("b",3.0)] (Def "a" d2 aXb) @?= Val 6.0 )
     , testCase "let a=2 in x+y = x+y {4 marks}"
          (simp [] (Def "a" d2 xPy) @?= xPy )
     , testCase "let a=2 in (x+y)+z = (x+y)+z {4 marks}"
          (simp [] (Def "a" d2 xPyPz) @?= xPyPz )
-    , testCase "let a=2 in (x+let a=3 in x+a)  =  x+(x+3) {5 marks}"
+    , testCase "let a=2 in (x+let a=3 in x+a) = x+(x+3) {5 marks}"
        (simp [] (Def "a" d2 xPa3) @?= xP3)
     ]

@@ -31,7 +31,19 @@ data Expr
 
 -- Implement:
 ins :: Ord k => k -> d -> Tree k d -> Tree k d
-ins _ _ _  = error "ins NYI"
+ins key value nil = Leaf key value
+
+ins insertKey insertData (Leaf currentKey currentData)
+    | insertKey == currentKey = Leaf insertKey insertData
+    | insertKey < currentKey = Br (Leaf insertKey insertData) Nil currentKey currentData
+    | insertKey > currentKey = Br Nil (Leaf insertKey insertData) currentKey currentData
+
+ins insertKey insertData (Br left right currentKey currentData)
+    | insertKey == currentKey = Br left right insertKey insertData
+    | insertKey < currentKey = Br (ins insertKey insertData left) right currentKey currentData
+    | insertKey > currentKey = Br left (ins insertKey insertData right) currentKey currentData
+
+
 
 -- Part 2 : Tree Lookup -------------------------------
 
